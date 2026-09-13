@@ -1,0 +1,146 @@
+<mxfile host="app.diagrams.net" agent="claude-code" version="24.0.0">
+  <diagram name="nextjs-ecs-otel-auto" id="otelArch">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ============ Account boundary ============ -->
+        <mxCell id="account" value="&#9729; Account 905860205176  (us-west-2)" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#AAB7B8;verticalAlign=top;align=left;fontColor=#545B64;fontSize=13;fontStyle=1;spacingLeft=14;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1580" height="800" as="geometry" />
+        </mxCell>
+
+        <!-- ============ VPC ============ -->
+        <mxCell id="vpc" value="&#9729; VPC: nextjs-otel  (10.0.0.0/16)" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#AAB7B8;verticalAlign=top;align=left;fontColor=#545B64;fontSize=12;fontStyle=1;spacingLeft=14;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="1020" height="700" as="geometry" />
+        </mxCell>
+
+        <mxCell id="alb" value="ALB&#10;nextjs-otel-alb" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.application_load_balancer;" vertex="1" parent="1">
+          <mxGeometry x="100" y="130" width="56" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="natgw" value="NAT Gateway&#10;(regional x1)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.nat_gateway;" vertex="1" parent="1">
+          <mxGeometry x="210" y="130" width="56" height="56" as="geometry" />
+        </mxCell>
+
+        <mxCell id="epRowLabel" value="VPC Endpoints" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#8C4FFF;" vertex="1" parent="1">
+          <mxGeometry x="100" y="235" width="120" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="epEcrApi" value="ecr.api" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#8C4FFF;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=9;aspect=fixed;shape=mxgraph.aws4.endpoints;" vertex="1" parent="1">
+          <mxGeometry x="100" y="258" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="epEcrDkr" value="ecr.dkr" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#8C4FFF;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=9;aspect=fixed;shape=mxgraph.aws4.endpoints;" vertex="1" parent="1">
+          <mxGeometry x="160" y="258" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="epSsm" value="ssm" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#8C4FFF;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=9;aspect=fixed;shape=mxgraph.aws4.endpoints;" vertex="1" parent="1">
+          <mxGeometry x="220" y="258" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="epXray" value="xray" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#8C4FFF;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=9;aspect=fixed;shape=mxgraph.aws4.endpoints;" vertex="1" parent="1">
+          <mxGeometry x="280" y="258" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="epS3gw" value="s3 (gateway)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#8C4FFF;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=9;aspect=fixed;shape=mxgraph.aws4.endpoints;" vertex="1" parent="1">
+          <mxGeometry x="340" y="258" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ecsCluster" value="ECS cluster&#10;nextjs-otel-cluster" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elastic_container_service;" vertex="1" parent="1">
+          <mxGeometry x="960" y="130" width="56" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="svcNote" value="Service: nextjs-otel-service  (capacityProvider=FARGATE_SPOT, desired=1, circuitBreaker.rollback=true)" style="text;html=1;align=right;verticalAlign=middle;fontSize=10;fontColor=#545B64;" vertex="1" parent="1">
+          <mxGeometry x="600" y="250" width="440" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ============ ECS Task (dashed, matches blog style) ============ -->
+        <mxCell id="task" value="&#9881; ECS Task  —  nextjs-otel-taskdef  (ARM64/Graviton, cpu=512, memory=1024)" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#545B64;fillColor=#FFFFFF;verticalAlign=top;align=left;fontColor=#545B64;fontSize=11;fontStyle=1;spacingLeft=12;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="100" y="330" width="760" height="290" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cApp" value="App&#10;Next.js standalone&#10;healthCheck: /api/hello (30s)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#ED7100;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.container_2;" vertex="1" parent="1">
+          <mxGeometry x="130" y="385" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cCollector" value="OtelCollector&#10;AWS Distro for&#10;OpenTelemetry (ADOT)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.container_2;" vertex="1" parent="1">
+          <mxGeometry x="290" y="385" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cInit" value="OtelInit&#10;(init container)&#10;cp -a &#8594; volume, exits" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#ED7100;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.container_2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="385" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cFirelens" value="FireLensLogRouter&#10;(Fluent Bit sidecar)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#ED7100;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.container_2;" vertex="1" parent="1">
+          <mxGeometry x="610" y="385" width="70" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="volume" value="shared volume&#10;(otel-auto-instrumentation-node,&#10;task-scoped ephemeral)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#F5F5F5;strokeColor=#999999;fontSize=8;fontColor=#545B64;" vertex="1" parent="1">
+          <mxGeometry x="290" y="500" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eInitVol" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#999999;endArrow=open;fontSize=8;" edge="1" parent="1" source="cInit" target="volume">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eVolApp" value="read-only" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;endArrow=open;fontSize=8;" edge="1" parent="1" source="volume" target="cApp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ IAM Roles (outlined resource icon, like the blog's "hard hat") ============ -->
+        <mxCell id="roleTask" value="TaskRole" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#DD344C;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.role;" vertex="1" parent="1">
+          <mxGeometry x="200" y="660" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="roleExec" value="TaskExecutionRole" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#FFFFFF;strokeColor=#DD344C;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.role;" vertex="1" parent="1">
+          <mxGeometry x="340" y="660" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="eRoleTask" value="assumed by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=0;strokeColor=#232F3E;endArrow=block;fontSize=9;" edge="1" parent="1" source="roleTask" target="task">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eRoleExec" value="assumed by&#10;(ECR pull, SSM read)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=0;strokeColor=#232F3E;endArrow=block;fontSize=9;" edge="1" parent="1" source="roleExec" target="task">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ External AWS services (inside account, outside VPC) ============ -->
+        <mxCell id="svcS3" value="Amazon S3&#10;logsBucket" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="130" width="56" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="svcSsm" value="SSM Parameter&#10;Store" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.systems_manager_parameter_store;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="260" width="56" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="svcXray" value="AWS X-Ray" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.xray;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="390" width="56" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="svcAmp" value="Amazon Managed&#10;Service for&#10;Prometheus (AMP)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.managed_service_for_prometheus;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="520" width="56" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ============ User ============ -->
+        <mxCell id="user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=11;strokeColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="-40" y="620" width="36" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ============ Edges: black = control/config, green = actual data flow ============ -->
+        <mxCell id="eUserAlb" value="HTTP :80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#232F3E;endArrow=block;fontSize=10;" edge="1" parent="1" source="user" target="alb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eAlbApp" value="HTTP :3000&#10;healthCheck /api/hello" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#232F3E;endArrow=block;fontSize=10;exitX=0.5;exitY=1;entryX=0;entryY=0.3;" edge="1" parent="1" source="alb" target="cApp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eAppCollector" value="OTLP gRPC :4317&#10;(localhost)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2E7D32;fontColor=#2E7D32;endArrow=block;fontSize=10;" edge="1" parent="1" source="cApp" target="cCollector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eAppFirelens" value="stdout/stderr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2E7D32;fontColor=#2E7D32;endArrow=block;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="cApp" target="cFirelens">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eFirelensS3" value="Logs (PutObject, gzip)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2E7D32;fontColor=#2E7D32;endArrow=block;fontSize=10;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" edge="1" parent="1" source="cFirelens" target="svcS3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eCollectorXray" value="Traces (awsxray exporter)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2E7D32;fontColor=#2E7D32;endArrow=block;fontSize=10;exitX=1;exitY=0.4;entryX=0;entryY=0.5;" edge="1" parent="1" source="cCollector" target="svcXray">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eCollectorAmp" value="Metrics&#10;(prometheusremotewrite, SigV4,&#10;via NAT Gateway)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2E7D32;fontColor=#2E7D32;endArrow=block;fontSize=10;exitX=1;exitY=0.6;entryX=0;entryY=0.5;" edge="1" parent="1" source="cCollector" target="svcAmp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eSsmCollector" value="AOT_CONFIG_CONTENT&#10;(Secret via VPCE:ssm)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#232F3E;endArrow=block;fontSize=9;exitX=0;exitY=0.5;entryX=1;entryY=0.4;" edge="1" parent="1" source="svcSsm" target="cCollector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ Legend ============ -->
+        <mxCell id="legend" value="凡例：緑線 = 実データフロー（トレース/メトリクス/ログ） ／ 黒線 = 制御・設定・IAM ／ オレンジ塗り四角 = サービス的アイコン（ADOT Collector） ／ オレンジ輪郭四角 = タスク内コンテナ ／ 赤丸 = IAMロール ／ 紫丸 = VPCエンドポイント" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#545B64;" vertex="1" parent="1">
+          <mxGeometry x="60" y="795" width="1500" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
