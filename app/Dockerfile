@@ -1,15 +1,19 @@
-FROM node:22-slim AS deps
+# Pin the patch version: 22.23.4 fixes CVE-2026-111497 (Brotli decoder OOB write / RCE).
+# A floating "22-slim" tag can resolve to a stale, vulnerable cached image.
+ARG NODE_IMAGE=node:22.23.4-slim
+
+FROM ${NODE_IMAGE} AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
 
-FROM node:22-slim AS builder
+FROM ${NODE_IMAGE} AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-FROM node:22-slim AS runner
+FROM ${NODE_IMAGE} AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
