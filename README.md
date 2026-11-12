@@ -94,7 +94,7 @@ research/  調査メモ（ADOT イメージ仕様、ECS ボリューム共有、
 
 ## 前提条件
 
-- Node.js 22.x（`nvm use 22.23.2`）
+- Node.js 22.23.4 以上（`nvm use 22.23.4`。CVE-2026-111497 修正版）
 - Docker（イメージビルドに使用。ローカル確認は OrbStack/Docker Desktop 等）
 - AWS CLI の認証情報（`cdk deploy` を行う場合）
 - AWS CDK CLI（`infra/` 配下で `npx cdk ...` を使うので事前インストール不要）
